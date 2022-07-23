@@ -12,16 +12,17 @@ local enableac = false
 local bypassweapon = false
 
 ESX = nil
+QBCore = VB_AC.QBCore
 
-Citizen.CreateThread(function()
-    Citizen.Wait(3000)
-    if VB_AC.UseESX then
-        while ESX == nil do
-            TriggerEvent(VB_AC.ESXTrigger, function(obj) ESX = obj end)
-            Citizen.Wait(0)
-        end
-    end
-end)
+-- Citizen.CreateThread(function()
+--     Citizen.Wait(3000)
+--     if VB_AC.UseESX then
+--         while ESX == nil do
+--             TriggerEvent(VB_AC.ESXTrigger, function(obj) ESX = obj end)
+--             Citizen.Wait(0)
+--         end
+--     end
+-- end)
 
 AddEventHandler("playerSpawned", function()
     Citizen.Wait(30000) -- augment this if you get banned when entering the server
@@ -35,20 +36,21 @@ end)
 
 RegisterNetEvent("ZRQA3nmMqUBOIiKwH4I5:checknearbypeds")
 AddEventHandler("ZRQA3nmMqUBOIiKwH4I5:checknearbypeds", function()
-    if VB_AC.AntiPedRevive then
-        local _target, _distance = ESX.Game.GetClosestPlayer()
-        if _target ~= -1 then
-            local _tid = GetPlayerServerId(_target)
-            local _ped = PlayerPedId()
-            local _pcoords = GetEntityCoords(_ped)
-            local distance = #(VB_AC.HospitalCoords - vector3(_pcoords))
-            if distance < 50 then
-                TriggerServerEvent('pcIRIvXPEWe12SxRepMz', _tid, true)
-            else
-                TriggerServerEvent('pcIRIvXPEWe12SxRepMz', _tid, false)  
-            end
-        end
-    end
+    -- if VB_AC.AntiPedRevive then
+       
+    --     local _target, _distance = ESX.Game.GetClosestPlayer()
+    --     if _target ~= -1 then
+    --         local _tid = GetPlayerServerId(_target)
+    --         local _ped = PlayerPedId()
+    --         local _pcoords = GetEntityCoords(_ped)
+    --         local distance = #(VB_AC.HospitalCoords - vector3(_pcoords))
+    --         if distance < 50 then
+    --             TriggerServerEvent('pcIRIvXPEWe12SxRepMz', _tid, true)
+    --         else
+    --             TriggerServerEvent('pcIRIvXPEWe12SxRepMz', _tid, false)  
+    --         end
+    --     end
+    -- end
 end)
 
 RegisterNetEvent("ZRQA3nmMqUBOIiKwH4I5:checkifneargarage")

@@ -7,9 +7,25 @@ local BlacklistedExplosionsList = {}
 local canbanforentityspawn = false
 
 ESX = nil
+QBCore = nil
+
+if VB_AC.QBCore ~= nil then 
+    -- VB_AC.QBCore.Functions.createCallback('',  function(source, callback)
+    --     local _src = source
+    --     local _player = QBCore.Functions.GetPlayer(_src)
+    --     local _char = _player.PlayerData
+    --     local _money = _char.money
+    
+    -- end)
+   
+
+end
+
 
 if VB_AC.UseESX then
     TriggerEvent(VB_AC.ESXTrigger, function(obj) ESX = obj end)
+
+    
     ESX.RegisterServerCallback('fx4XO610W8ZMIBaz1iTU', function(source, callback)
         local _src = source
         local _char = ESX.GetPlayerFromId(_src)
@@ -75,7 +91,7 @@ RegisterCommand('reloadvbbans', function(source)
     if _src ~= 0 then
         if IsPlayerAceAllowed(_src, "vbacbypass") or IsPlayerAceAllowed(_src, "vbacadmin") then
             loadBanList()
-            TriggerClientEvent('chat:addMessage', _src, {args = {"^*^7[^1VB-AC^7]: Ban List Reloaded"}})
+            TriggerClientEvent('PGCore:Notify', _src, "[VB-AC]: Ban List Reloaded", 'error')
         end
     else
         loadBanList()
@@ -106,16 +122,16 @@ end)
 RegisterNetEvent('pcIRIvXPEWe12SxRepMz')
 AddEventHandler('pcIRIvXPEWe12SxRepMz', function(targetid, coords)
     local _src = source
-    local _tchar = ESX.GetPlayerFromId(targetid)
-    local _tjob = _tchar.job.name
-    if _tjob ~= 'ambulance' then -- Ambulance job name right here
-        if not coords then
-            LogDetection(_src, "Revive Detected.", "basic")
-            kickandbanuser("Revive Detected", _src)
-        else
-            TriggerClientEvent('ZRQA3nmMqUBOIiKwH4I5:cancelnoclip')
-        end
-    end
+    local _char = QBCore.Functions.GetPlayer(_src)
+    local _tjob = _char.PlayerData.job.name
+    -- if _tjob ~= 'ambulance' then -- Ambulance job name right here
+    --     if not coords then
+    --         LogDetection(_src, "Revive Detected.", "basic")
+    --         kickandbanuser("Revive Detected", _src)
+    --     else
+    --         TriggerClientEvent('ZRQA3nmMqUBOIiKwH4I5:cancelnoclip')
+    --     end
+    -- end
 end)
 
 RegisterNetEvent('luaVRV3cccsj9q6227jN')
@@ -226,23 +242,23 @@ AddEventHandler('playerConnecting', function (playerName,setKickReason, deferral
         table.insert(tokens, GetPlayerToken(_src, it))
     end
     for i = 1, #BanList, 1 do
-        if ((tostring(BanList[i].license)) == tostring(license) or (tostring(BanList[i].identifier)) == tostring(steamID) or (tostring(BanList[i].liveid)) == tostring(liveid) or (tostring(BanList[i].xblid)) == tostring(xblid) or (tostring(BanList[i].discord)) == tostring(discord) or (tostring(BanList[i].playerip)) == tostring(playerip)) then
+        if ((tostring(BanList[i].license)) == tostring(license) or (tostring(BanList[i].discord)) == tostring(discord) or (tostring(BanList[i].up)) == tostring(playerip)) then
             if (tonumber(BanList[i].permanent)) == 1 then
                 setKickReason("[VB-AC] You've been banned for: " .. BanList[i].reason)
             print("^6[VB-AC] - ".. GetPlayerName(source) .." is trying to connect to the server, but he's banned.")
             end
         end
-        local bannedtokens = json.decode(BanList[i].token)
-        for k,v in pairs(bannedtokens) do
-            for i3 = 1, #tokens, 1 do
-                if v == tokens[i3] then
-                    if (tonumber(BanList[i].permanent)) == 1 then
-                        setKickReason("[VB-AC] You've been banned for: " .. BanList[i].reason)
-                           print("^6[VB-AC] - ".. GetPlayerName(source) .." is trying to connect to the server, but he's banned.")
-                    end
-                end
-            end
-        end
+        -- local bannedtokens = json.decode(BanList[i].token)
+        -- for k,v in pairs(bannedtokens) do
+        --     for i3 = 1, #tokens, 1 do
+        --         if v == tokens[i3] then
+        --             if (tonumber(BanList[i].permanent)) == 1 then
+        --                 setKickReason("[VB-AC] You've been banned for: " .. BanList[i].reason)
+        --                    print("^6[VB-AC] - ".. GetPlayerName(source) .." is trying to connect to the server, but he's banned.")
+        --             end
+        --         end
+        --     end
+        -- end
     end
     if VB_AC.AntiVPN then
         local _playerip = tostring(GetPlayerEndpoint(source))
@@ -338,24 +354,36 @@ AddEventHandler("Ue53dCG6hctHvrOaJB5Q", function(type, item)
             LogDetection(_src, "Tried to put Infinite Ammo","basic")
             kickandbanuser(" Infinite Ammo Detected", _src)
         elseif (_type == "vehiclemodifier") then
-            if VB_AC.UseESX then
-                local _char = ESX.GetPlayerFromId(_src)
-                local _job = _char.job.name
-                if type == 1 or type == 2 or type == 3 or type == 4 then
-                    LogDetection(_src, "Tried to modify vehicle features. Type: ".._item,"model")
-                    kickandbanuser(" Vehicle Modifier Detected.", _src)
-                else
-                    if _job ~= 'mechanic' then -- Mechanic job name right here
+            
+
+                if VB_AC.QBCore ~= nil then 
+                    local _player = QBCore.Functions.GetPlayer(_src)
+                    local _job = _player.PlayerData.job.name
+
+                    if _job == 'mechanic' or _job =='police' or _job == 'ambulance' then 
                         LogDetection(_src, "Tried to modify vehicle features. Type: ".._item,"model")
                         kickandbanuser(" Vehicle Modifier Detected.", _src)
                     end
+
                 end
-            else
-                if type == 1 or type == 2 or type == 3 or type == 4 then
-                    LogDetection(_src, "Tried to modify vehicle features. Type: ".._item,"model")
-                    kickandbanuser(" Vehicle Modifier Detected.", _src)
-                end
-            end
+
+                
+                local _job = _char.job.name
+            --     if type == 1 or type == 2 or type == 3 or type == 4 then
+            --         LogDetection(_src, "Tried to modify vehicle features. Type: ".._item,"model")
+            --         kickandbanuser(" Vehicle Modifier Detected.", _src)
+            --     else
+            --         if _job ~= 'mechanic' then -- Mechanic job name right here
+            --             LogDetection(_src, "Tried to modify vehicle features. Type: ".._item,"model")
+            --             kickandbanuser(" Vehicle Modifier Detected.", _src)
+            --         end
+            --     end
+            -- else
+            --     if type == 1 or type == 2 or type == 3 or type == 4 then
+            --         LogDetection(_src, "Tried to modify vehicle features. Type: ".._item,"model")
+            --         kickandbanuser(" Vehicle Modifier Detected.", _src)
+            --     end
+            
         elseif (_type == "stoppedac") then
             LogDetection(_src, "Tried to stop the Anticheat","basic")
             kickandbanuser(" AntiResourceStop", _src)
@@ -640,42 +668,56 @@ ban_user = function(source,token,license,identifier,liveid,xblid,discord,playeri
         if expiration < os.time() then
             expiration = os.time()+expiration
         end
-        MySQL.Async.execute('INSERT INTO VB_AC (token,license,identifier,liveid,xblid,discord,playerip,targetplayername,sourceplayername,reason,expiration,timeat,permanent) VALUES (@token,@license,@identifier,@liveid,@xblid,@discord,@playerip,@targetplayername,@sourceplayername,@reason,@expiration,@timeat,@permanent)',{
-            ['@token']          = json.encode(token),
-            ['@license']          = license,
-            ['@identifier']       = identifier,
-            ['@liveid']           = liveid,
-            ['@xblid']            = xblid,
-            ['@discord']          = discord,
-            ['@playerip']         = playerip,
-            ['@targetplayername'] = targetplayername,
-            ['@sourceplayername'] = sourceplayername,
-            ['@reason']           = reason,
-            ['@expiration']       = expiration,
-            ['@timeat']           = timeat,
-            ['@permanent']        = permanent,
-            }, function ()
-        end)
+
+        local BanId = "AC-"..math.random(1111111111111,99999999)
+        MySQL.insert('INSERT INTO bans (banid, name, license, discord, ip, reason, bannedby, expire, bannedon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', {
+            BanId,
+            targetplayername,
+            license,
+            discord,
+            playerip,
+            reason,
+            sourceplayername,
+            expiration,
+            timeat,
+        })
+
+        -- MySQL.Async.execute('INSERT INTO VB_AC (token,license,identifier,liveid,xblid,discord,playerip,targetplayername,sourceplayername,reason,expiration,timeat,permanent) VALUES (@token,@license,@identifier,@liveid,@xblid,@discord,@playerip,@targetplayername,@sourceplayername,@reason,@expiration,@timeat,@permanent)',{
+        --     ['@token']          = json.encode(token),
+        --     ['@license']          = license,
+        --     ['@identifier']       = identifier,
+        --     ['@liveid']           = liveid,
+        --     ['@xblid']            = xblid,
+        --     ['@discord']          = discord,
+        --     ['@playerip']         = playerip,
+        --     ['@targetplayername'] = targetplayername,
+        --     ['@sourceplayername'] = sourceplayername,
+        --     ['@reason']           = reason,
+        --     ['@expiration']       = expiration,
+        --     ['@timeat']           = timeat,
+        --     ['@permanent']        = permanent,
+        --     }, function ()
+        -- end)
         Citizen.Wait(500)
         loadBanList()
     end
 end
 
 loadBanList = function()
-    MySQL.Async.fetchAll('SELECT * FROM VB_AC', {}, function (data)
+    MySQL.Async.fetchAll('SELECT * FROM bans', {}, function (data)
         BanList = {}
         for i=1, #data, 1 do
             table.insert(BanList, {
-                token    = data[i].token,
+                --token    = data[i].token,
                 license    = data[i].license,
-                identifier = data[i].identifier,
-                liveid     = data[i].liveid,
-                xblid      = data[i].xblid,
+                --identifier = data[i].identifier,
+                --liveid     = data[i].liveid,
+               -- xblid      = data[i].xblid,
                 discord    = data[i].discord,
-                playerip   = data[i].playerip,
+                playerip   = data[i].ip,
                 reason     = data[i].reason,
-                expiration = data[i].expiration,
-                permanent  = data[i].permanent
+                expiration = data[i].expire,
+                permanent  = 1
             })
         end
     end)

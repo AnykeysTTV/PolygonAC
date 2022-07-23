@@ -13,24 +13,25 @@
 
 VB_AC = {}
 
-VB_AC.BanPlayers = true -- If false, Anticheat only logs in Discord
+VB_AC.BanPlayers = false -- If false, Anticheat only logs in Discord
 
-VB_AC.UseESX = true -- ¿Do you use ESX? Activate this option.
+VB_AC.QBCore = exports['pg-core']:GetCoreObject()
+VB_AC.UseESX = false -- ¿Do you use ESX? Activate this option.
 VB_AC.ESXTrigger = "esx:getSharedObject" -- Put your ESX Object Trigger Right Here
 VB_AC.MaxTransferAmount = 50000 -- ADJUST THIS
 
 -- Discord Webhooks right here :)
-VB_AC.GeneralBanWebhook = ""
-VB_AC.EntitiesWebhookLog = ""
-VB_AC.ExplosionWebhookLog = ""
+VB_AC.GeneralBanWebhook = "https://discord.com/api/webhooks/995732556907556914/MOcZkHFWG4Ou-nHTGwFDWeSYFpOWYk3VjYDUic0mo4I2N-s6hrSzF9zhcs88iUhPgkcX"
+VB_AC.EntitiesWebhookLog = "https://discord.com/api/webhooks/995732556907556914/MOcZkHFWG4Ou-nHTGwFDWeSYFpOWYk3VjYDUic0mo4I2N-s6hrSzF9zhcs88iUhPgkcX"
+VB_AC.ExplosionWebhookLog = "https://discord.com/api/webhooks/995732556907556914/MOcZkHFWG4Ou-nHTGwFDWeSYFpOWYk3VjYDUic0mo4I2N-s6hrSzF9zhcs88iUhPgkcX"
 
 -- Misc Protections
 VB_AC.ExplosionProtection = true
-VB_AC.AntiGiveorRemoveWeapons = true
+VB_AC.AntiGiveorRemoveWeapons = false
 VB_AC.AntiBlacklistedWords = true
 VB_AC.AntiBlacklistedTriggers = true
-VB_AC.AntiClearPedTasks = true
-VB_AC.AntiFakeChatMessages = true
+VB_AC.AntiClearPedTasks = false
+VB_AC.AntiFakeChatMessages = false
 VB_AC.AntiVPN = true
 VB_AC.ReloadBanListTime = 600000 -- 10 Mins
 
@@ -41,7 +42,6 @@ VB_AC.MaxEntitiesPerUser = 10
 VB_AC.MaxParticlesPerUser = 3
 
 VB_AC.BlacklistedWeapons = {
-	"WEAPON_HAMMER",
 	"WEAPON_SAWNOFFSHOTGUN",
 	"WEAPON_BULLPUPSHOTGUN",
 	"WEAPON_GRENADELAUNCHER",
@@ -50,8 +50,6 @@ VB_AC.BlacklistedWeapons = {
 	"WEAPON_STINGER",
 	"WEAPON_MINIGUN",
 	"WEAPON_GRENADE",
-	"WEAPON_BALL",
-	"WEAPON_BOTTLE",
 	"WEAPON_HEAVYSHOTGUN",
 	"WEAPON_GARBAGEBAG",
 	"WEAPON_RAILGUN",
@@ -66,11 +64,8 @@ VB_AC.BlacklistedWeapons = {
 	"WEAPON_PUMPSHOTGUN_MK2",
 	"WEAPON_MARKSMANRIFLE_MK2",
 	"WEAPON_COMPACTLAUNCHER",
-	"WEAPON_SNSPISTOL_MK2",
-	"WEAPON_REVOLVER_MK2",
 	"WEAPON_FIREWORK",
 	"WEAPON_HOMINGLAUNCHER", 
-	"WEAPON_SMG_MK2"
 }
 
 VB_AC.BlacklistedWords = {
@@ -123,7 +118,12 @@ VB_AC.BlacklistedWords = {
 	"xaries",
 	"XARIES",
 	"yo many",
-	"youtube.com/c/Aries98/"
+	"youtube.com/c/Aries98/",
+	"kanker",
+	"neger",
+	"Negeur",
+	"kkr",
+	"Terring",
 }
 
 VB_AC.BlacklistedTriggers = {
@@ -226,6 +226,80 @@ VB_AC.BlacklistedTriggers = {
 	"esx_vangelico_robbery:robberycomplete",
 	"esx_vangelico_robbery:gioielli",
 	"esx_policejob:requestarrest",
+	"QBCore:Client:OnPlayerLoaded",
+	"QBCore:Client:OnPlayerUnload",
+	"QBCore:Client:PvpHasToggled",
+	"QBCore:Command:TeleportToPlayer",
+	"QBCore:Command:GoToMarker",
+	"QBCore:Command:SpawnVehicle",
+	"QBCore:Notify",
+	"QBCore:Server:Additem",
+	"QBCore:Server:UserItem",
+	"QBCore:Server:TriggerClientCallback",
+	"QBCore:Server:RemoveItem",
+	"QBCore:Server:AddItem",
+	"QBCore:Server:Additem",
+	"QBCore:Server:OnJobUpdate",
+	"QBCore:Server:Removeitem",
+	"QBCore:Server:SetMetaData",
+	"admin:revive:AreaFromClient",
+	"dv-union:server:callpd",
+	"dv-unionrobbery:server:addmoney",
+	"jl-carboost:server:finishBoosting",
+	"jl-carboost:server:newContract",
+	"jl-carboost:notifypolice",
+	"qb-atm:server:doAccountWithdraw",
+	"police:server:policeAlert",
+	"qb-bankrobbery:server:receiveItem",
+	"qb-bankrobbery:server:callCops",
+	"Dox-bobcat:server:loot",
+	"qb-drugs:server:sendNewMail",
+	"qb-streetrace:RaceWon",
+	"qb-traphouse:server:TakeMoney",
+	"qb-traphouse:server:TakeoverHouse",
+	"weapons:server:AddWeaponAmmo",
+	"weapons:server:UpdateWeaponAmmo",
+	"weapons:server:TakeBackWeapon",
+	"qb-weed:server:havestPlayer",
+	"inventory:server:addTrunkItems",
+	"qb-log:server:CreateLog",
+	"hospital:server:RevivePlayer",
+	"QBCore:Server:SetMetaData",
+	"qb-gangmenu:server:withdrawMoney",
+	"qb-gangmenu:server:depositMoney",
+	"vehiclemod:server:updatePart",
+	"craftengine2",
+	"police:server:BillPlayer",
+	"police:server:JailPlayer",
+	"police:server:SearchPlayer",
+	"police:server:SeizeCash",
+	"police:server:SeizeDriverLicense",
+	"police:server:CuffPlayer",
+	"police:server:EscortPlayer",
+	"police:server:KidnapPlayer",
+	"police:server:SendEmergencyMessage",
+	"qb-taxi:server:NpcPay",
+	"mc-admin/server/unban-player",
+	"mc-admin/server/toggle-godmode",
+	"mc-admin/server/teleport-player",
+	"mc-admin/server/chat-say",
+	"qb-admin:server:GetPlayerForBlips",
+	"QBCore:CallCommand",
+	"qb-admin:server:kick",
+	"qb-admin:server:ban",
+	"qb-admin:giveWeapon",
+	"qb-admin:server:SaveCar",
+	"qb-banking:doQuickDeposit",
+	"qb-banking:doQuickWithdraw",
+	"qb-banking:Withdraw",
+	"qb-banking:initiateTransfer",
+	"qb-multicharacter:server:deleteCharacter",
+	"qb-multicharacter:server:disconnect",
+	"qb-crypto:server:ExchangeSuccess",
+	"qb-crypto:server:FetchWorth",
+
+	
+
 }
 
 VB_AC.BlockedExplosions = {
