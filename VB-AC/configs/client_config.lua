@@ -26,7 +26,7 @@ VB_AC.AntiSpectate = false
 VB_AC.AntiSpeedHacks = false
 VB_AC.AntiBoomDamage = false
 VB_AC.PlayerProtection = false
-VB_AC.AntiBlacklistedWeapons = false
+VB_AC.AntiBlacklistedWeapons = true
 VB_AC.AntiVDM = true
 
 VB_AC.AntiDamageModifier = false
@@ -36,7 +36,7 @@ VB_AC.AntiResourceStartorStop = true
 VB_AC.AntiCommandInjection = false -- If you can get in the server while this is "true" perfect. Otherwise just disable it.
 VB_AC.AntiLicenseClears = true
 
-VB_AC.AntiCInjection = true
+VB_AC.AntiCInjection = false
 VB_AC.BlackListedCMD = {
 	"killmenu",
 	"chocolate",
@@ -53,7 +53,7 @@ VB_AC.BlackListedCMD = {
 }
 
 VB_AC.DisableVehicleWeapons = true
-VB_AC.AntiKeyboardNativeInjections = true
+VB_AC.AntiKeyboardNativeInjections = false
 VB_AC.AntiCheatEngine = true
 VB_AC.AntiNoclip = false
 VB_AC.AntiRadar = false
@@ -72,11 +72,11 @@ VB_AC.ClearObjectsAfterDetection = true
 VB_AC.ClearVehiclesAfterDetection = true
 VB_AC.AntiMenyoo = true
 VB_AC.AntiPedRevive = false
-VB_AC.AntiSuicide = true -- This isn't perfectly working, if normal players get banned because of this, disable it.
+VB_AC.AntiSuicide = false -- This isn't perfectly working, if normal players get banned because of this, disable it.
 VB_AC.AntiGiveArmour = false
-VB_AC.AntiFlyandVehicleBelowLimits = true 
+VB_AC.AntiFlyandVehicleBelowLimits = false 
 
-VB_AC.AntiVehicleSpawn = true
+VB_AC.AntiVehicleSpawn = false
 VB_AC.GarageList = { -- Place all of the garage coordinates right here.
 	{x = 217.89, y = -804.99, z = 30.91},
 }
@@ -84,7 +84,6 @@ VB_AC.GarageList = { -- Place all of the garage coordinates right here.
 VB_AC.HospitalCoords = vector3(293.11,-582.1,43.19) -- Put here the hospital coords or the coords where the player respawns after dying
 
 VB_AC.BlacklistedWeapons = {
-	"WEAPON_HAMMER",
 	"WEAPON_SAWNOFFSHOTGUN",
 	"WEAPON_BULLPUPSHOTGUN",
 	"WEAPON_GRENADELAUNCHER",
@@ -93,8 +92,6 @@ VB_AC.BlacklistedWeapons = {
 	"WEAPON_STINGER",
 	"WEAPON_MINIGUN",
 	"WEAPON_GRENADE",
-	"WEAPON_BALL",
-	"WEAPON_BOTTLE",
 	"WEAPON_HEAVYSHOTGUN",
 	"WEAPON_GARBAGEBAG",
 	"WEAPON_RAILGUN",
@@ -109,9 +106,7 @@ VB_AC.BlacklistedWeapons = {
 	"WEAPON_PUMPSHOTGUN_MK2",
 	"WEAPON_MARKSMANRIFLE_MK2",
 	"WEAPON_COMPACTLAUNCHER",
-	"WEAPON_SNSPISTOL_MK2",
-	"WEAPON_REVOLVER_MK2",
 	"WEAPON_FIREWORK",
 	"WEAPON_HOMINGLAUNCHER", 
-	"WEAPON_SMG_MK2"
+
 }

@@ -32,7 +32,7 @@ VB_AC.AntiBlacklistedWords = true
 VB_AC.AntiBlacklistedTriggers = true
 VB_AC.AntiClearPedTasks = false
 VB_AC.AntiFakeChatMessages = false
-VB_AC.AntiVPN = true
+VB_AC.AntiVPN = false
 VB_AC.ReloadBanListTime = 600000 -- 10 Mins
 
 VB_AC.MaxPedsPerUser = 3
